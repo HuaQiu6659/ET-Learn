@@ -1,5 +1,7 @@
 ﻿namespace ET.Client
 {
+    //用结构体作为时间编号同时直接进行事件传参
+    
     public struct SceneChangeStart
     {
     }
@@ -31,5 +33,10 @@
     public struct AfterUnitCreate
     {
         public Unit Unit;
+    }
+
+    public struct TestEventStruct
+    {
+        public int intArg;
     }
 }
