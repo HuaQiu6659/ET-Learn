@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace ET
 {
     public static partial class ErrorCode
@@ -13,5 +15,10 @@ namespace ET
         // 这里配置逻辑层的错误码
         // 110000 - 200000是抛异常的错误
         // 200001以上不抛异常
+
+        [Description("账号或密码输入为空")]
+        public const int ERR_LoginInfoEmpty = 200002;
+        [Description("密码错误")]
+        public const int ERR_LoginWrongPassword = 200003;
     }
 }

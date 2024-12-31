@@ -39,4 +39,23 @@
     {
         public int intArg;
     }
+    
+    //登录事件
+    public struct LoginFailedEvent
+    {
+        public int errorCode;
+
+        public override string ToString()
+        {
+            switch (this.errorCode)
+            {
+                case ErrorCode.ERR_LoginInfoEmpty:
+                    return "账号或密码为空";
+                case ErrorCode.ERR_LoginWrongPassword:
+                    return "密码错误";
+            }
+            
+            return base.ToString();
+        }
+    }
 }

@@ -33,6 +33,8 @@ namespace ET
             // 强制刷新一下，防止关闭auto refresh，文件修改时间不准确
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
 
+            ToolsEditor.ExcelExporter();
+            ToolsEditor.Proto2CS();
             DoCompile();
         }
 

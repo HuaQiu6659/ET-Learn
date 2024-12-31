@@ -233,3 +233,23 @@ message G2C_Benchmark // ISessionResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+
+/*
+	类上方的为绑定回复类型，类右侧为继承的接口
+*/
+// ResponseType R2C_LoginAccountResponse
+message C2R_LoginAccountRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+	
+	string Account = 2;
+	string Password = 3;
+}
+
+message R2C_LoginAccountResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}		

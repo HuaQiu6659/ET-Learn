@@ -21,7 +21,8 @@ namespace ET.Server
 
             PlayerComponent playerComponent = root.GetComponent<PlayerComponent>();
             Player player = playerComponent.GetByAccount(account);
-            if (player == null)
+            //检测是否在线
+            if (player == null) //不在线
             {
                 player = playerComponent.AddChild<Player, string>(account);
                 playerComponent.Add(player);

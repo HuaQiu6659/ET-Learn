@@ -658,6 +658,15 @@ namespace ET
             c.Dispose();
         }
 
+        public T AddOrGetComponent<T>() where T : Entity, IAwake, new()
+        {
+            var result = GetComponent<T>();
+            if (result is null)
+                return AddComponent<T>();
+            
+            return result;
+        }
+
         public K GetComponent<K>() where K : Entity
         {
             if (this.components == null)

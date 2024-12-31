@@ -23,7 +23,7 @@ namespace ET.Client
             
             await EventSystem.Instance.PublishAsync(root, new AppStartInitFinish());
             
-            await EventSystem.Instance.PublishAsync(root, new TestEventStruct(){intArg = 9});
+            //await EventSystem.Instance.PublishAsync(root, new TestEventStruct(){intArg = 9});
         }
     }
 }
