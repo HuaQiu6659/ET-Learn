@@ -14,6 +14,8 @@
 			Scene scene = gateMapComponent.Scene;
 			
 			// 这里可以从DB中加载Unit
+			// 正常流程是 读取数据库中角色最后存在的地图点（地图ID，角色坐标，角色朝向） 回传给客户端
+			// 将角色进地图的信息广播给在该地图的其他用户 
 			Unit unit = UnitFactory.Create(scene, player.Id, UnitType.Player);
 			
 			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.GetBySceneName(session.Zone(), "Map1");

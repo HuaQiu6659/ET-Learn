@@ -16,7 +16,10 @@ namespace ET.Client
                 return;
             }
 
-            root.GetComponent<PlayerComponent>().MyId = response.PlayerId;
+            string token = response.token;
+            //root.GetComponent<PlayerComponent>().MyId = response.PlayerId;
+            //TODO:获取服务器列表
+            //TODO:获取区服角色列表
             
             await EventSystem.Instance.PublishAsync(root, new LoginFinish());
         }

@@ -9,14 +9,16 @@ namespace ET.Server
         protected override async ETTask Run(Session session, C2G_LoginGate request, G2C_LoginGate response)
         {
             Scene root = session.Root();
+            //在C2R_LoginHandler中已经为客户端创建对应的token
             string account = root.GetComponent<GateSessionKeyComponent>().Get(request.Key);
-            if (account == null)
+            if (account == null)    //非法链接 or 令牌过期
             {
                 response.Error = ErrorCore.ERR_ConnectGateKeyError;
                 response.Message = "Gate key验证失败!";
                 return;
             }
             
+            //也是用来设置客户端链接超时处理
             session.RemoveComponent<SessionAcceptTimeoutComponent>();
 
             PlayerComponent playerComponent = root.GetComponent<PlayerComponent>();
@@ -46,6 +48,7 @@ namespace ET.Server
                 }
                 else
                 {
+                    //直接将服务器中的玩家链接替换成新上线的玩家
                     PlayerSessionComponent playerSessionComponent = player.GetComponent<PlayerSessionComponent>();
                     playerSessionComponent.Session = session;
                 }

@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using ET.Helper;
+
+namespace ET.Client
 {
     //用结构体作为时间编号同时直接进行事件传参
     
@@ -47,12 +49,10 @@
 
         public override string ToString()
         {
-            switch (this.errorCode)
+            if (this.errorCode >= (int)EErrorCode.ERR_RequestRepeated)
             {
-                case ErrorCode.ERR_LoginInfoEmpty:
-                    return "账号或密码为空";
-                case ErrorCode.ERR_LoginWrongPassword:
-                    return "密码错误";
+                var codeEnum = (EErrorCode)this.errorCode;
+                return codeEnum.GetEnumDescription();
             }
             
             return base.ToString();

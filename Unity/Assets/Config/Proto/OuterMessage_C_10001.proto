@@ -238,6 +238,7 @@ message G2C_Benchmark // ISessionResponse
 /*
 	类上方的为绑定回复类型，类右侧为继承的接口
 */
+/*账号登录*/
 // ResponseType R2C_LoginAccountResponse
 message C2R_LoginAccountRequest // ISessionRequest
 {
@@ -252,4 +253,30 @@ message R2C_LoginAccountResponse // ISessionResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-}		
+	
+	string token = 4;
+}
+/*账号注册*/
+// ResponseType R2C_RegisterAccountResponse
+message C2R_RegisterAccountRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+
+	string Account = 2;
+	string Password = 3;
+}
+
+message R2C_RegisterAccountResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+/*A:All-任意服务器  强制下线*/
+message A2C_Disconnect // ISessionMessage
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

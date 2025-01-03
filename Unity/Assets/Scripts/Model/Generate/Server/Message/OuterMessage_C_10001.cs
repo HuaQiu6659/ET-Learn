@@ -1134,6 +1134,110 @@ namespace ET
         [MemoryPackOrder(2)]
         public string Message { get; set; }
 
+        [MemoryPackOrder(3)]
+        public string token { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.token = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2R_RegisterAccountRequest)]
+    [ResponseType(nameof(R2C_RegisterAccountResponse))]
+    public partial class C2R_RegisterAccountRequest : MessageObject, ISessionRequest
+    {
+        public static C2R_RegisterAccountRequest Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2R_RegisterAccountRequest), isFromPool) as C2R_RegisterAccountRequest;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public string Account { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Password { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Account = default;
+            this.Password = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.R2C_RegisterAccountResponse)]
+    public partial class R2C_RegisterAccountResponse : MessageObject, ISessionResponse
+    {
+        public static R2C_RegisterAccountResponse Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(R2C_RegisterAccountResponse), isFromPool) as R2C_RegisterAccountResponse;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.A2C_Disconnect)]
+    public partial class A2C_Disconnect : MessageObject, ISessionMessage
+    {
+        public static A2C_Disconnect Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(A2C_Disconnect), isFromPool) as A2C_Disconnect;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -1187,5 +1291,8 @@ namespace ET
         public const ushort G2C_Benchmark = 10035;
         public const ushort C2R_LoginAccountRequest = 10036;
         public const ushort R2C_LoginAccountResponse = 10037;
+        public const ushort C2R_RegisterAccountRequest = 10038;
+        public const ushort R2C_RegisterAccountResponse = 10039;
+        public const ushort A2C_Disconnect = 10040;
     }
 }
