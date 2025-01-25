@@ -12,6 +12,10 @@ namespace ET
         public const int ResourcesLoader = 7;
 
         public const int Login = 8;     //账号登录、注册
+        public const int Role = 9;      //获取、创建角色
+
+        public const int LoginCenterLogin = 10;  //中心服注册、注销锁
+        public const int LoginGate = 11;  //网关登录
 
         public const int Max = 100; // 这个必须最大
     }

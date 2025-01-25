@@ -31,6 +31,29 @@
             return token;
         }
 
+        /// <summary>
+        /// 检测账号和token是否相符
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="account">要检测的账号</param>
+        /// <param name="token">客户端传来的token</param>
+        /// <param name="session">客户端链接</param>
+        /// <param name="response">响应，不相符时response.Error会赋值EErrorCode.ERR_TokenError</param>
+        /// <param name="disconnectWithError">True：不相符时断开客户端链接</param>
+        /// <returns>true：相符 False：不相符</returns>
+        public static bool CheckToken(this TokensComponent self, string account, string token, Session session, IResponse response, bool disconnectWithError = true)
+        {
+            string tokenInServer = self.Get(account);
+            bool isLegal = tokenInServer != null && tokenInServer == token;
+            if (!isLegal)
+            {
+                response.Error = (int)EErrorCode.ERR_TokenError;
+                if (disconnectWithError)
+                    session.DisconnectAsync().Coroutine();
+            }
+            return isLegal;
+        }
+
         private static async ETTask TimeOutRemoveKey(this TokensComponent self, string key, string token)
         {
             await self.Root().GetComponent<TimerComponent>().WaitAsync(60 * 1000);

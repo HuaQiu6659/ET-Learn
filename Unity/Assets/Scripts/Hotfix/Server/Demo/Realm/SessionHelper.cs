@@ -21,5 +21,27 @@
             
             self.Dispose();
         }
+
+        public static SessionLockingComponent Lock(this Session self)
+        {
+            return self.AddComponent<SessionLockingComponent>();
+        }
+
+        /// <summary>
+        /// 检测是否重复请求，重复请求时对重复的请求发送错误并断开连接
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="response"></param>
+        /// <returns>True：重复请求，False：正常请求</returns>
+        public static bool IsRepeateRequest(this Session self, IResponse response)
+        {
+            var isLocking = self.GetComponent<SessionLockingComponent>() != null;
+            if (isLocking)
+            {
+                response.Error = (int)EErrorCode.ERR_RequestRepeated;
+                self.DisconnectAsync().Coroutine();
+            }
+            return isLocking;
+        }
     }
 }

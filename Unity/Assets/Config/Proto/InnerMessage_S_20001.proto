@@ -192,3 +192,36 @@ message  L2R_LoginAccountResponse // IResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+/*强制下线*/
+// ResponseType G2LDisconnectGateUnitResponse
+message L2G_DisconnectGateUnitRequest //IRequest
+{
+	int32 RpcId = 1;
+
+	string account = 2;
+}
+
+message G2LDisconnectGateUnitResponse //IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+/*账号登录网关*/
+// ResponseType L2G_RecordLoginInfosResponse
+message G2L_RecordLoginInfosRequest //IRequest
+{
+	int32 RpcId = 1;
+
+	string account = 2;
+	int32 serverID = 3;
+}
+
+message L2G_RecordLoginInfosResponse //IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

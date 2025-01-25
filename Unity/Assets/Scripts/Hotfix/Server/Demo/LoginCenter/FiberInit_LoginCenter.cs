@@ -12,6 +12,8 @@
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
 
+            root.AddComponent<LoginInfosRecordComponent>();
+
             await ETTask.CompletedTask;
         }
     }

@@ -256,6 +256,34 @@ message R2C_LoginAccountResponse // ISessionResponse
 	
 	string token = 4;
 }
+
+/*登录后的服务器列表请求*/
+/*区服信息*/
+message ServerInfoProto
+{
+	int32 id = 1;
+	int32 state = 2;
+	string serverName = 3;
+}
+
+// ResponseType R2C_GetServerInfosResponse
+message C2R_GetServerInfosRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+	
+	string token = 2;
+	string account = 3;	/*为啥还要用account*/
+}
+
+message R2C_GetServerInfosResponse //ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	
+	repeated ServerInfoProto serverInfos = 4;
+}
+
 /*账号注册*/
 // ResponseType R2C_RegisterAccountResponse
 message C2R_RegisterAccountRequest // ISessionRequest
@@ -267,6 +295,111 @@ message C2R_RegisterAccountRequest // ISessionRequest
 }
 
 message R2C_RegisterAccountResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+/*获取角色信息*/
+message RoleInfoProto
+{
+	int32 id = 1;
+	string name = 2;
+	int32 state = 3;
+	string account = 4;
+	int64 lastLoginTime = 5;
+	int64 createTime = 6;
+	int32 serverID= 7;
+}
+
+// ResponseType R2C_GetRolesResponse
+message C2R_GetRolesRequest //ISessionRequest
+{
+	int32 RpcId = 1;
+	
+	string token = 2;
+	string account = 3;
+	int32 serverID = 4;
+}
+
+message R2C_GetRolesResponse //ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	
+	repeated RoleInfoProto roles = 4;
+}
+
+/*创建角色*/
+// ResponseType R2C_GetRolesResponse
+message C2R_CreateRoleRequest //ISessionRequest
+{
+	int32 RpcId = 1;
+	
+	string token = 2;
+	string account = 3;
+	int32 serverID = 4;
+	string roleName = 5;
+}
+
+message R2C_CreateRoleResponse //ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+
+	RoleInfoProto role = 4;
+}
+
+/*获取ReamlKey 用于Gate验证*/
+// ResponseType R2C_RealmKeyResponse
+message C2R_RealmKeyRequest //ISessionRequest
+{
+	int32 RpcId = 1;
+	
+	string token = 2;
+	string account = 3;
+	int32 serverID = 4;
+}
+
+message R2C_RealmKeyResponse //ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	
+	int64 reamlKey = 4;
+	string gateAddress = 5;
+	int64 gateID = 6;
+}
+
+/*角色进入游戏的网关验证*/
+// ResponseType R2C_RealmKeyResponse
+message	C2G_LoginGameGateRequest //ISessionRequest
+{
+	int32 RpcId = 1;
+	
+	int64 key = 2;
+	string account = 3;
+	int64 roleID = 4;
+}
+
+message	G2C_LoginGameGateResponse //ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// ResponseType G2C_EnterGameResponse
+message C2G_EnterGameRequest //ISessionRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_EnterGameResponse //ISessionResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

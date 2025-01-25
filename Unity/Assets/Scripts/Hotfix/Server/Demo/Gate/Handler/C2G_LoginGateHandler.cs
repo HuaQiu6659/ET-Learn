@@ -9,8 +9,9 @@ namespace ET.Server
         protected override async ETTask Run(Session session, C2G_LoginGate request, G2C_LoginGate response)
         {
             Scene root = session.Root();
+            
             //在C2R_LoginHandler中已经为客户端创建对应的token
-            string account = root.GetComponent<GateSessionKeyComponent>().Get(request.Key);
+            string account = root.GetComponent<GateSessionKeyComponent>().Get(request.Key);   //Mask
             if (account == null)    //非法链接 or 令牌过期
             {
                 response.Error = ErrorCore.ERR_ConnectGateKeyError;

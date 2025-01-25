@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using ET.Server;
 
 namespace ET
 {
@@ -110,6 +111,8 @@ namespace ET
             return ret;
         }
 
+        public static async ETTask<TResponse> Call<TResponse>(this Session self, IRequest request, ETCancellationToken cancellationToken) where TResponse : class, IResponse => await self.Call(request, cancellationToken) as TResponse;
+
         public static async ETTask<IResponse> Call(this Session self, IRequest request, int time = 0)
         {
             int rpcId = ++self.RpcId;
@@ -141,6 +144,8 @@ namespace ET
 
             return await rpcInfo.Wait();
         }
+
+        public static async ETTask<TResponse> Call<TResponse>(this Session self, IRequest request, int time = 0) where TResponse : class, IResponse => await self.Call(request, time) as TResponse;
 
         public static void Send(this Session self, IMessage message)
         {

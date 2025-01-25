@@ -20,3 +20,23 @@ message NetClient2Main_Login // IResponse
 	int64 PlayerId = 4;
 	string token = 5;
 }
+
+// ResponseType NetClient2Main_LoginGameResponse
+message Main2NetClient_LoginGameRequest //IRequest
+{
+	int32 RpcId = 1;
+	
+	string account = 2;
+	int64 realmKey = 3;
+	int64 roleID = 4;
+	string gateAddress = 5;
+}
+
+message NetClient2Main_LoginGameResponse //IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	
+	int64 playerID = 4;
+}

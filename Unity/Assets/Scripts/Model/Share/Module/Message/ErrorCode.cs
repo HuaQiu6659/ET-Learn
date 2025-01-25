@@ -43,5 +43,19 @@ namespace ET
         
         [Description("账号已存在")]
         ERR_Account_RegisterRepeated,
+        
+        [Description("token未注册")]
+        ERR_TokenError,
+        
+        //*********** 角色操作 ***********
+        [Description("角色名为空")]
+        ERR_RoleNameEmpty,
+        
+        [Description("角色已存在")]
+        ERR_RoleExisted,
+        
+        //*********** 中心服 ***********
+        [Description("重复登录")]
+        ERR_AccountLogined,
     }
 }
