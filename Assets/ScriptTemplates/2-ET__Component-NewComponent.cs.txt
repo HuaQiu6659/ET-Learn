@@ -1,0 +1,14 @@
+/*
+┌────────────────────────────┐
+│　Description: 
+│　Remark: 
+└────────────────────────────┘
+*/
+namespace ET.Client
+{
+    [ComponentOf(typeof())]
+    public class #SCRIPTNAME# : Entity
+    {
+
+    }
+}

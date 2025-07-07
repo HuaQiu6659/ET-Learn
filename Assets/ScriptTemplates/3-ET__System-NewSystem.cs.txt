@@ -1,0 +1,14 @@
+/*
+┌────────────────────────────┐
+│　Description: 
+│　Remark: 
+└────────────────────────────┘
+*/
+namespace ET.Client
+{
+    [EntitySystemOf(typeof())]
+    public static partial class #SCRIPTNAME#
+    {
+
+    }
+}

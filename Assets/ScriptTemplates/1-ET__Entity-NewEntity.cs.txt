@@ -1,0 +1,13 @@
+/*
+┌────────────────────────────┐
+│　Description: 
+│　Remark: 
+└────────────────────────────┘
+*/
+namespace ET.Client
+{
+    public class #SCRIPTNAME# : Entity
+    {
+
+    }
+}
