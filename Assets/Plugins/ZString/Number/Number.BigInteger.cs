@@ -34,6 +34,7 @@ namespace System
             private const int BitsPerBlock = sizeof(int) * 8;
             private const int MaxBlockCount = (MaxBits + (BitsPerBlock - 1)) / BitsPerBlock;
 
+#pragma warning disable ET0015 // Static字段声明需要标记标签
             private static readonly uint[] s_Pow10UInt32Table = new uint[]
             {
                 1,          // 10^0
@@ -311,6 +312,7 @@ namespace System
                 0x00000000,
                 0x00000000,
             };
+#pragma warning restore ET0015 // Static字段声明需要标记标签
 
             private int _length;
             private fixed uint _blocks[MaxBlockCount];

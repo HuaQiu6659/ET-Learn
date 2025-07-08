@@ -10,8 +10,10 @@ namespace Cysharp.Text
     {
         const string InvalidName = "$";
 
+#pragma warning disable ET0015 // Static字段声明需要标记标签
         static readonly Dictionary<T, string> names;
         static readonly Dictionary<T, byte[]> utf8names;
+#pragma warning restore ET0015 // Static字段声明需要标记标签
 
         static EnumUtil()
         {

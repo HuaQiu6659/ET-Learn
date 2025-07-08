@@ -267,6 +267,7 @@ namespace System
         private const int CharStackBufferSize = 32;
         private const string PosNumberFormat = "#";
 
+#pragma warning disable ET0015 // Static字段声明需要标记标签
         private static readonly string[] s_singleDigitStringCache = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
         private static readonly string[] s_posCurrencyFormats =
@@ -300,6 +301,7 @@ namespace System
         {
             "(#)", "-#", "- #", "#-", "# -",
         };
+#pragma warning restore ET0015 // Static字段声明需要标记标签
 
         public static unsafe string FormatDecimal(decimal value, ReadOnlySpan<char> format, NumberFormatInfo info)
         {

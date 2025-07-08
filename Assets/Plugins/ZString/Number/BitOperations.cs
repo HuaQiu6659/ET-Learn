@@ -22,6 +22,7 @@ namespace System.Numerics
         // C# no-alloc optimization that directly wraps the data section of the dll (similar to string constants)
         // https://github.com/dotnet/roslyn/pull/24621
 
+#pragma warning disable ET0015 // Static字段声明需要标记标签
         private static ReadOnlySpan<byte> TrailingZeroCountDeBruijn => new byte[32]
         {
             00, 01, 28, 02, 29, 14, 24, 03,
@@ -37,6 +38,7 @@ namespace System.Numerics
             08, 12, 20, 28, 15, 17, 24, 07,
             19, 27, 23, 06, 26, 05, 04, 31
         };
+#pragma warning restore ET0015 // Static字段声明需要标记标签
 
         /// <summary>
         /// Count the number of leading zero bits in a mask.

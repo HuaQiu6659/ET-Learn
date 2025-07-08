@@ -14,6 +14,7 @@ namespace Cysharp.Text
 
         const int ThreadStaticBufferSize = 64444;
         const int DefaultBufferSize = 65536; // use 64K default buffer.
+#pragma warning disable ET0015 // Static字段声明需要标记标签
         static Encoding UTF8NoBom = new UTF8Encoding(false);
 
         static byte newLine1;

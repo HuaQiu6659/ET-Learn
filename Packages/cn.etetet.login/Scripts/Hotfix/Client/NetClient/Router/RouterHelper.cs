@@ -3,6 +3,7 @@ using System.Net;
 
 namespace ET.Client
 {
+    //ET使用了路由器转发机制来处理网络连接,  物理连接是连接的路由服务器上, 消息包发给路由器再由路由器转发给指定的服务器
     public static partial class RouterHelper
     {
         // 注册router

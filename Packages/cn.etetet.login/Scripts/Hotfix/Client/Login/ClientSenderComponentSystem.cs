@@ -39,10 +39,12 @@
             self.netClientActorId = new ActorId(self.Fiber().Process, self.fiberId);
 
             Main2NetClient_Login main2NetClientLogin = Main2NetClient_Login.Create();
-            main2NetClientLogin.OwnerFiberId = self.Fiber().Id;
-            main2NetClientLogin.Account = account;
-            main2NetClientLogin.Password = password;
-            main2NetClientLogin.Address = address;
+            {
+                main2NetClientLogin.OwnerFiberId = self.Fiber().Id;
+                main2NetClientLogin.Account = account;
+                main2NetClientLogin.Password = password;
+                main2NetClientLogin.Address = address;
+            }
             NetClient2Main_Login response = await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login;
             
             return response.PlayerId;

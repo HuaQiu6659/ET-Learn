@@ -48,6 +48,7 @@ namespace System
             private const int MaximalTargetExponent = -32;
             private const int MinimalTargetExponent = -60;
 
+#pragma warning disable ET0015 // Static字段声明需要标记标签
             private static readonly short[] s_CachedPowersBinaryExponent = new short[]
             {
                 -1220,

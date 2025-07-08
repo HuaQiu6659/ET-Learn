@@ -17,6 +17,7 @@ namespace System
 
         public readonly struct FloatingPointInfo
         {
+#pragma warning disable ET0015 // Static字段声明需要标记标签
             public static readonly FloatingPointInfo Double = new FloatingPointInfo(
                 denormalMantissaBits: 52,
                 exponentBits: 11,

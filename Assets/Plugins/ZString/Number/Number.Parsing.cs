@@ -43,6 +43,7 @@ namespace System
         private const int SingleMaxExponent = 39;
         private const int SingleMinExponent = -45;
 
+#pragma warning disable ET0015 // Static字段声明需要标记标签
         /// <summary>Map from an ASCII char to its hex value, e.g. arr['b'] == 11. 0xFF means it's not a hex digit.</summary>
         internal static ReadOnlySpan<byte> CharToHexLookup => new byte[]
         {

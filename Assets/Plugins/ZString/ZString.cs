@@ -9,6 +9,7 @@ namespace Cysharp.Text
 {
     public static partial class ZString
     {
+#pragma warning disable ET0015 // Static字段声明需要标记标签
         static Encoding UTF8NoBom = new UTF8Encoding(false);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

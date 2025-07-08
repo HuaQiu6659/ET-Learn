@@ -1,0 +1,23 @@
+{
+  "9bc6c3bb9df8e57f6e35221ff58c15b1": {
+    "title": "初始场景",
+    "titleColor": "44AAFF",
+    "description": "HybridCLD的热更dll也在这",
+    "createTime": "2025-07-08T14:31:29.8071767+08:00",
+    "updateTime": "2025-07-08T14:31:29.8071767+08:00"
+  },
+  "c9b1fd6888ce8d44499a2bf748642280": {
+    "title": "说明",
+    "titleColor": "44AAFF",
+    "description": "1.Model: 实体   ModelView: UI的实体  Hotfix: 逻辑  HotfixView: UI的逻辑\n2.程序集需要靠 AssemblyReference 来进行重定向(也就是游戏逻辑不应该再创建额外的程序集)",
+    "createTime": "0001-01-01T00:00:00",
+    "updateTime": "2025-07-08T15:37:26.149763+08:00"
+  },
+  "ef6a0cf00127b42498ac98c63db55bd1": {
+    "title": "路由",
+    "titleColor": "44AAFF",
+    "description": "ET使用了路由器转发机制来处理网络连接,  物理连接是连接的路由服务器上, 消息包发给路由器再由路由器转发给指定的服务器",
+    "createTime": "2025-07-08T16:34:38.5170809+08:00",
+    "updateTime": "2025-07-08T16:34:38.5170809+08:00"
+  }
+}
