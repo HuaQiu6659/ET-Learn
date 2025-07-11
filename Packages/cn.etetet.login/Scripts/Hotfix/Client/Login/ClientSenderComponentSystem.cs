@@ -33,7 +33,7 @@
             self.Dispose();
         }
 
-        public static async ETTask<long> LoginAsync(this ClientSenderComponent self, string address, string account, string password)
+        public static async ETTask<NetClient2Main_Login> LoginAsync(this ClientSenderComponent self, string address, string account, string password)
         {
             self.fiberId = await FiberManager.Instance.Create(SchedulerType.ThreadPool, 0, SceneType.NetClient, "");
             self.netClientActorId = new ActorId(self.Fiber().Process, self.fiberId);
@@ -45,9 +45,8 @@
                 main2NetClientLogin.Password = password;
                 main2NetClientLogin.Address = address;
             }
-            NetClient2Main_Login response = await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login;
-            
-            return response.PlayerId;
+
+            return await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login; ;
         }
 
         public static void Send(this ClientSenderComponent self, IMessage message)

@@ -1,3 +1,5 @@
+using Cysharp.Text;
+
 namespace ET.Client
 {
     public static class LoginHelper
@@ -5,11 +7,15 @@ namespace ET.Client
         public static async ETTask Login(Scene root, string address, string account, string password)
         {
             //保证登录与上一次的链接无关联
-            root.RemoveComponent<ClientSenderComponent>();
-            ClientSenderComponent clientSenderComponent = root.AddComponent<ClientSenderComponent>();
+            ClientSenderComponent clientSenderComponent = root.ReplaceComponent<ClientSenderComponent>();
 
-            long playerId = await clientSenderComponent.LoginAsync(address, account, password);
-            root.GetComponent<PlayerComponent>().MyId = playerId;
+            var response = await clientSenderComponent.LoginAsync(address, account, password);
+            if (response.Error != ErrorCode.ERR_Success)
+            {
+                Log.Error(ZString.Format("登录失败, {0}:{1}", response.Error, response.Message));
+                return;
+            }
+            root.GetComponent<PlayerComponent>().MyId = response.PlayerId;
             await EventSystem.Instance.PublishAsync(root, new LoginFinish());
         }
     }

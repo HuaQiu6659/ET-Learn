@@ -8,6 +8,9 @@ namespace ET.Client
     [MessageHandler(SceneType.NetClient)]
     public class Main2NetClient_LoginHandler: MessageHandler<Scene, Main2NetClient_Login, NetClient2Main_Login>
     {
+        //Client向RealmServer请求登录, 获取token
+        //Client利用token向GateServer请求登录
+
         protected override async ETTask Run(Scene root, Main2NetClient_Login request, NetClient2Main_Login response)
         {
             string account = request.Account;
@@ -38,6 +41,13 @@ namespace ET.Client
                 c2RLogin.Account = account;
                 c2RLogin.Password = password;
                 r2CLogin = (R2C_Login)await session.Call(c2RLogin);
+
+                //登录失败
+                if (r2CLogin.Error != ErrorCode.ERR_Success)
+                {
+                    response.Error = r2CLogin.Error;
+                    return;
+                }
             }
 
             // 创建一个gate Session, 并且保存到SessionComponent中
@@ -49,9 +59,9 @@ namespace ET.Client
             c2GLoginGate.GateId = r2CLogin.GateId;
             G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(c2GLoginGate);
 
-            Log.Debug("登陆gate成功!");
-
             response.PlayerId = g2CLoginGate.PlayerId;
+
+            Log.Debug("登陆gate成功!");
         }
     }
 }
