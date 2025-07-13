@@ -16,6 +16,7 @@ namespace ET.Server
             StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Get(root.Fiber.Id);
             root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(startSceneConfig.InnerIPPort));
             root.AddComponent<DBManagerComponent>();
+            root.AddComponent<VerificationCodeComponent>();
 
             await ETTask.CompletedTask;
         }
