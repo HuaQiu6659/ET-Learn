@@ -186,6 +186,21 @@ namespace ET
             
             return null;
         }
+        
+        private string ExtractNamespace(string content)
+        {
+            // 提取命名空间
+            string pattern = @"namespace\s+([\w\.]+)";
+            Match match = Regex.Match(content, pattern);
+            
+            if (match.Success)
+            {
+                return match.Groups[1].Value;
+            }
+            
+            // 如果没有找到命名空间，默认返回"ET"
+            return "ET";
+        }
 
         private Dictionary<string, int> ExtractConstIntFields(string content, string className)
         {
@@ -198,6 +213,9 @@ namespace ET
                 @"internal\s+const\s+int\s+(\w+)\s*=\s*([^;]+);",
                 @"private\s+const\s+int\s+(\w+)\s*=\s*([^;]+);"
             };
+
+            // 获取类的命名空间
+            string classNamespace = ExtractNamespace(content);
             
             foreach (string pattern in patterns)
             {
@@ -206,20 +224,14 @@ namespace ET
                 foreach (Match match in matches)
                 {
                     string fieldName = match.Groups[1].Value;
-                    string valueExpression = match.Groups[2].Value.Trim();
                     
                     // 避免重复添加同名字段
                     if (!fields.ContainsKey(fieldName))
                     {
                         // 尝试使用反射获取const int数值
-                        if (TryGetConstValueByReflection(className, fieldName, out int reflectionValue))
+                        if (TryGetConstValueByReflection($"{classNamespace}.{className}", fieldName, out int reflectionValue))
                         {
                             fields[fieldName] = reflectionValue;
-                        }
-                        // 如果反射失败，回退到表达式计算
-                        else if (TryEvaluateExpression(valueExpression, out int calculatedValue))
-                        {
-                            fields[fieldName] = calculatedValue;
                         }
                     }
                 }
@@ -227,31 +239,10 @@ namespace ET
             
             return fields;
         }
-
-        private bool TryEvaluateExpression(string expression, out int result)
-        {
-            result = 0;
-            
-            try
-            {
-                // 简单的数学表达式计算
-                if (EvaluateSimpleExpression(expression, out result))
-                    return true;
-            }
-            catch
-            {
-                // 如果计算失败，尝试直接解析为整数
-                if (int.TryParse(expression, out result))
-                    return true;
-            }
-            
-            return false;
-        }
         
-        private bool TryGetConstValueByReflection(string className, string fieldName, out int value)
+        private bool TryGetConstValueByReflection(string fullClassName, string fieldName, out int value)
         {
             value = 0;
-            className = $"ET.{className}";
             
             try
             {
@@ -259,7 +250,7 @@ namespace ET
                 Type targetType = null;
                 foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
                 {
-                    targetType = assembly.GetType(className);
+                    targetType = assembly.GetType(fullClassName);
                     if (targetType != null)
                         break;
                 }
@@ -285,7 +276,7 @@ namespace ET
             }
             catch (Exception ex)
             {
-                Debug.LogWarning($"反射获取常量值失败 {className}.{fieldName}: {ex.Message}");
+                Debug.LogWarning($"反射获取常量值失败 {fullClassName}.{fieldName}: {ex.Message}");
             }
             
             return false;
