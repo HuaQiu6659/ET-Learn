@@ -6,5 +6,6 @@
 		public const int Gate = PackageType.Login * 1000 + 2;
 		public const int Router = PackageType.Login * 1000 + 3;
 		public const int RouterManager = PackageType.Login * 1000 + 4;
+		public const int LoginCenter = PackageType.Login * 1000 + 5;
 	}
 }

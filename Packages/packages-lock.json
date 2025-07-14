@@ -62,6 +62,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "cn.etetet.learn": {
+      "version": "file:cn.etetet.learn",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "cn.etetet.loader": {
       "version": "file:cn.etetet.loader",
       "depth": 0,

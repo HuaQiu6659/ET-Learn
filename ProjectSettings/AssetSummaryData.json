@@ -26,5 +26,19 @@
     "description": null,
     "createTime": "2025-07-13T23:25:28.7856615+08:00",
     "updateTime": "2025-07-13T23:25:28.7856615+08:00"
+  },
+  "a1d087679fc066a70efb7220c3a6dfed": {
+    "title": "登录, 注册",
+    "titleColor": "44AAFF",
+    "description": null,
+    "createTime": "2025-07-14T10:20:00.0175877+08:00",
+    "updateTime": "2025-07-14T10:20:00.0175877+08:00"
+  },
+  "bdd6ad76b2e351e0608828ec5e3bfeb9": {
+    "title": "学习",
+    "titleColor": "FFE300",
+    "description": null,
+    "createTime": "2025-07-14T10:20:18.7277786+08:00",
+    "updateTime": "2025-07-14T10:20:18.7277786+08:00"
   }
 }

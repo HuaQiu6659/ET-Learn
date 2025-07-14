@@ -1,0 +1,16 @@
+﻿{
+  "name": "cn.etetet.learn",
+  "displayName": "ET.Learn",
+  "version": "0.0.0",
+  "unity": "2022.3",
+  "description": "学习",
+  "author": {
+    "name": "林"
+  },
+  "repository": {},
+  "relatedPackages": {},
+  "dependencies": {},
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@ET-Packages"
+  }
+}

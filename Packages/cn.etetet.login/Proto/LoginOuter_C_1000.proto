@@ -20,6 +20,7 @@ message NetClient2Main_Login // IResponse
 	string Message = 3;
 
 	int64 PlayerId = 4;
+	string Token = 5;
 }
 
 // ResponseType G2C_Ping
@@ -34,24 +35,6 @@ message G2C_Ping // ISessionResponse
 	int32 Error = 2;
 	string Message = 3;
 	int64 Time = 4;
-}
-
-// ResponseType R2C_Login
-message C2R_Login // ISessionRequest
-{
-	int32 RpcId = 1;
-	string  Account = 2;  // 帐号
-	string  Password = 3;  // 密码
-}
-
-message R2C_Login // ISessionResponse
-{
-	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
-	string Address = 4;
-	int64 Key = 5;
-	int64 GateId = 6;
 }
 
 // ResponseType G2C_LoginGate
@@ -71,20 +54,58 @@ message G2C_LoginGate // ISessionResponse
 }
 
 // ------------ 教程消息 ------------
-// ResponseType R2C_LoginAccountRespose
-message C2R_LoginAccountRequest // ISessionRequest
+
+// 登录请求
+// ResponseType R2C_LoginRespose
+message C2R_LoginRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+
+	string Account = 2;
+	bool ByVerificationCode = 3;
+	string Password = 4; // 密码or验证码
+}
+
+message R2C_LoginRespose // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3; 
+
+	string Token = 4;
+}
+
+// 验证码请求
+// ResponseType R2C_VerificationCodeResponse
+message C2R_VerificationCodeRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+
+	string Receiver = 2;
+	bool IsEamil = 3;
+}
+
+message R2C_VerificationCodeResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// 账号注册请求
+// ResponseType R2C_RegisterAccountResponse
+message C2R_RegisterAccountRequest // ISessionRequest
 {
 	int32 RpcId = 1;
 
 	string Account = 2;
 	string Password = 3;
+	string VerificationCode = 4;
 }
 
-message R2C_LoginAccountRespose // ISessionResponse
+message R2C_RegisterAccountResponse // ISessionResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-
-	string Key = 4;
 }

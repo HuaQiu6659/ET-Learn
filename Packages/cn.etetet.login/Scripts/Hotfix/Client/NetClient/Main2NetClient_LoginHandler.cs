@@ -31,37 +31,30 @@ namespace ET.Client
             //负载均衡, 把账号均分到多个Realm服务器中
             IPEndPoint realmAddress = routerAddressComponent.GetRealmAddress(account);
 
-            R2C_Login r2CLogin;
+            R2C_LoginRespose r2CLogin;
             NetComponent netComponent = root.GetComponent<NetComponent>();
 
             //通过路由转发给登陆服务器
-            using (Session session = await netComponent.CreateRouterSession(realmAddress, account, password))
+            Session session = await netComponent.CreateRouterSession(realmAddress, account, password);
+            C2R_LoginRequest c2RLogin = C2R_LoginRequest.Create();
             {
-                C2R_Login c2RLogin = C2R_Login.Create();
                 c2RLogin.Account = account;
                 c2RLogin.Password = password;
-                r2CLogin = (R2C_Login)await session.Call(c2RLogin);
-
-                //登录失败
-                if (r2CLogin.Error != ErrorCode.ERR_Success)
-                {
-                    response.Error = r2CLogin.Error;
-                    return;
-                }
+                r2CLogin = (R2C_LoginRespose)await session.Call(c2RLogin);
             }
 
-            // 创建一个gate Session, 并且保存到SessionComponent中
-            Session gateSession = await netComponent.CreateRouterSession(NetworkHelper.ToIPEndPoint(r2CLogin.Address), account, password);
-            gateSession.AddComponent<ClientSessionErrorComponent>();
-            root.AddComponent<SessionComponent>().Session = gateSession;
-            C2G_LoginGate c2GLoginGate = C2G_LoginGate.Create();
-            c2GLoginGate.Key = r2CLogin.Key;
-            c2GLoginGate.GateId = r2CLogin.GateId;
-            G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(c2GLoginGate);
+            //登录失败
+            if (r2CLogin.Error != ErrorCode.ERR_Success)
+            {
+                response.Error = r2CLogin.Error;
+                response.Message = r2CLogin.Message;
+                session?.Dispose();
+                return;
+            }
 
-            response.PlayerId = g2CLoginGate.PlayerId;
-
-            Log.Debug("登陆gate成功!");
+            //暂存连接
+            root.AddComponent<SessionComponent>().Session = session;
+            response.Token = r2CLogin.Token;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace ET.Client
 {
     public static class LoginHelper
     {
-        public static async ETTask Login(Scene root, string address, string account, string password)
+        public static async ETTask LoginByPassword(Scene root, string address, string account, string password)
         {
             //保证登录与上一次的链接无关联
             ClientSenderComponent clientSenderComponent = root.ReplaceComponent<ClientSenderComponent>();

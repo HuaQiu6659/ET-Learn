@@ -23,3 +23,18 @@ message G2M_SessionDisconnect // ILocationMessage
 {
 	int32 RpcId = 1;
 }
+
+// Realm 向 LoginCenter进行登录请求
+// ResponseType L2R_LoginResponse
+message R2L_LoginRequest // IRequest
+{
+	int32 RpcId = 1;
+	string Account = 2;
+}
+
+message L2R_LoginResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
