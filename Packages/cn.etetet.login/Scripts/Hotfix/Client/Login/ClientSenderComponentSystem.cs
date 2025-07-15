@@ -46,7 +46,18 @@
                 main2NetClientLogin.Address = address;
             }
 
-            return await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login; ;
+            return await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, main2NetClientLogin) as NetClient2Main_Login;
+        }
+
+        public static async ETTask<NetClient2Main_EnterGameResponse> EnterGameAsync(this ClientSenderComponent self, string account, long realmKey, string gateAddress)
+        {
+            Main2NetClient_EnterGameRequest enterGameRequest = Main2NetClient_EnterGameRequest.Create();
+            {
+                enterGameRequest.Account = account;
+                enterGameRequest.GateKey = realmKey;
+                enterGameRequest.GateAddress = gateAddress;
+            }
+            return await self.Root().GetComponent<ProcessInnerSender>().Call(self.netClientActorId, enterGameRequest) as NetClient2Main_EnterGameResponse;
         }
 
         public static void Send(this ClientSenderComponent self, IMessage message)

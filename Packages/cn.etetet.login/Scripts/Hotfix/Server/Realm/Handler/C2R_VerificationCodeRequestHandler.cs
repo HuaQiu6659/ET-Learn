@@ -3,6 +3,7 @@ using System.Text;
 
 namespace ET.Server
 {
+
     //Description: 验证码获取请求处理
     [MessageSessionHandler(SceneType.Realm)]
     [FriendOf(typeof(VerificationCode))]
@@ -43,7 +44,7 @@ namespace ET.Server
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();
-                session.Disconnect().NoContext();
+                session.DisconnectAsync().NoContext();
             }
         }
 

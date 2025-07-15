@@ -1,6 +1,6 @@
 /*
 ┌────────────────────────────┐
-│　Description: 
+│　Description: 成功连接gate后是否需要直接移除token? 毕竟已经不再使用token
 │　Remark: 
 └────────────────────────────┘
 */
@@ -31,6 +31,7 @@ namespace ET.Server
                 map[account] = token;
             else 
                 map.Add(account, token);
+            self.TimeOutRemoveKey(account, token).NoContext();
             return self;
         }
 
@@ -46,6 +47,21 @@ namespace ET.Server
             return token;
         }
 
+        public static bool Verificate(this TokensComponent self, string account, string token)
+        {
+            var tokenInCache = self.Get(account);
+            return tokenInCache != null && tokenInCache == token;
+        }
+
         public static string CreateToken(this TokensComponent self) => ZString.Concat(TimeInfo.Instance.ServerNow(), RandomGenerator.RandomNumber(int.MinValue, int.MaxValue));
+
+        //10分钟后token失效
+        private static async ETTask TimeOutRemoveKey(this TokensComponent self, string account, string token)
+        {
+            await self.Root().GetComponent<TimerComponent>().WaitAsync(600_000);
+            string tokenInMap = self.Get(account);
+            if (!string.IsNullOrEmpty(tokenInMap) && tokenInMap == token) 
+                self.Remove(account);
+        }
     }
 }

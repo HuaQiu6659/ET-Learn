@@ -1,6 +1,6 @@
 ﻿namespace ET.Server
 {
-	[ComponentOf(typeof(Player))]
+    [ComponentOf(typeof(Player))]
 	public class PlayerSessionComponent : Entity, IAwake
 	{
 		private EntityRef<Session> session;

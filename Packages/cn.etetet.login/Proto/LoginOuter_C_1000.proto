@@ -37,22 +37,6 @@ message G2C_Ping // ISessionResponse
 	int64 Time = 4;
 }
 
-// ResponseType G2C_LoginGate
-message C2G_LoginGate // ISessionRequest
-{
-	int32 RpcId = 1;
-	int64 Key = 2;  // 帐号
-	int64 GateId = 3;
-}
-
-message G2C_LoginGate // ISessionResponse
-{
-	int32 RpcId = 1;
-	int32 Error = 2;
-	string Message = 3;
-	int64 PlayerId = 4;
-}
-
 // ------------ 教程消息 ------------
 
 // 登录请求
@@ -104,6 +88,141 @@ message C2R_RegisterAccountRequest // ISessionRequest
 }
 
 message R2C_RegisterAccountResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// 服务器断开通知
+message A2C_Disconnect // ISessionMessage
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// 获取服务器列表
+// ResponseType R2C_ServerListResponse
+message C2R_ServerListRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+
+	string Account = 2;
+	string Token = 3;
+}
+
+message R2C_ServerListResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+
+	repeated ServerInfoProto List = 4;
+}
+
+// 服务器信息
+message ServerInfoProto
+{
+	int64 Id = 1;
+	string Name = 2;
+	int32 State = 3;
+}
+
+// 获取角色信息
+// ResponseType R2C_UserInfoResponse
+message C2R_UserInfoRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+
+	int64 ServerId = 2;
+	string Account = 3;
+	string Token = 4;
+}
+
+message R2C_UserInfoResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+
+	UserInfoProto Info = 4;
+}
+
+// 角色信息
+message UserInfoProto
+{
+	string Account = 1;	//所属账号
+	int64 ServerId = 2; //所属服务器
+
+	string Name = 3;	//用户昵称
+	string IconUrl = 4;	//用户头像地址
+}
+
+// ResponseType R2C_RealmKeyResponse
+message C2R_RealmKeyRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+	
+	string Account = 2;
+	int64 ServerId = 3;
+	string Token = 4;
+}
+
+message R2C_RealmKeyResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+
+	int64 Key = 4;
+	string GateAddress = 5;
+	int64 GateId = 6;
+}
+
+// ResponseType NetClient2Main_EnterGameResponse
+message Main2NetClient_EnterGameRequest // IRequest
+{
+	int32 RpcId = 1;
+	
+	string Account = 2;
+	int64 GateKey = 3;
+	string GateAddress = 4;
+}
+
+message NetClient2Main_EnterGameResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+
+// ResponseType G2C_LoginGateResponse
+message C2G_LoginGateRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+
+	int64 Key = 2; 
+	string Account = 4;
+}
+
+message G2C_LoginGateResponse // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+
+	int64 PlayerId = 4;
+}
+
+// ResponseType G2C_EnterGameResponse
+message C2G_EnterGameRequest // ISessionRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_EnterGameResponse // ISessionResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;

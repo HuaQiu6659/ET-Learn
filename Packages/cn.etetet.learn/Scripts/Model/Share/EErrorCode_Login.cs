@@ -11,6 +11,7 @@ namespace ET
         成功 = 0,
 
         网关令牌错误 = ErrorCode.ERR_ConnectGateKeyError,
+        客户端连接发生变化,
 
         账号不合法,
         密码不合法,
@@ -25,5 +26,9 @@ namespace ET
         
         验证码发送失败,
         验证码错误,
+
+        令牌验证失败,
+
+        账号在其他客户端登录
     }
 }

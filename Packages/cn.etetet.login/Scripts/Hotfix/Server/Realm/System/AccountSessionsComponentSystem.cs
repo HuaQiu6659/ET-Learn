@@ -12,13 +12,13 @@ namespace ET.Server
     public static partial class AccountSessionsComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ET.Server.AccountSessionsComponent self)
+        private static void Awake(this AccountSessionsComponent self)
         {
             self.accountSessionMap = new Dictionary<string, EntityRef<Session>>();
         }
 
         [EntitySystem]
-        private static void Destroy(this ET.Server.AccountSessionsComponent self)
+        private static void Destroy(this AccountSessionsComponent self)
         {
             self.accountSessionMap.Clear();
             self.accountSessionMap = null;

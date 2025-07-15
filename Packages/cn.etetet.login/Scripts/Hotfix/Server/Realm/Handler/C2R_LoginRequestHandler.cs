@@ -106,21 +106,25 @@ namespace ET.Server
             if (loginRsp.Error != ErrorCode.ERR_Success)
             {
                 response.Error = loginRsp.Error;
-                session.Disconnect().NoContext();
+                response.Message = loginRsp.Message;
+                session.DisconnectAsync().NoContext();
                 return;
             }
 
             // 将Session替换成当前连接的Session
             var sessionsComponent = scene.GetComponent<AccountSessionsComponent>();
-            var otherSession = sessionsComponent.Get(request.Account);
-
             // 当前账号已经登录, 强制挤下线
+            var otherSession = sessionsComponent.Get(request.Account);
             if (otherSession != null)
             {
-                //otherSession.Send();
-                otherSession.Disconnect().NoContext();
+                var disconnect = A2C_Disconnect.Create();
+                {
+                    disconnect.Error = (int)EDisconnectType.在其他客户端登录;
+                }
+                otherSession.Send(disconnect);
+                otherSession.DisconnectAsync().NoContext();
             }
-            scene.GetComponent<AccountSessionsComponent>().AddOrUpdate(account.account, session);
+            sessionsComponent.AddOrUpdate(account.account, session);
             session.AddComponent<AccountCheckOutTimeComponent, string>(account.account);
 
             // 更换成当前账号的Token
@@ -133,10 +137,8 @@ namespace ET.Server
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();
-                session.Disconnect().NoContext();
+                session.DisconnectAsync().NoContext();
             }
         }
-
-
     }
 }

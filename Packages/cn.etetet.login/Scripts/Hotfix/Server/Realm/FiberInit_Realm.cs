@@ -1,4 +1,5 @@
-﻿namespace ET.Server
+﻿
+namespace ET.Server
 {
     [Invoke(SceneType.Realm)]
     public class FiberInit_Realm: AInvokeHandler<FiberInit, ETTask>
@@ -13,11 +14,13 @@
             root.AddComponent<MessageSender>();
             StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Get(root.Fiber.Id);
             root.AddComponent<NetComponent, IKcpTransport>(new UdpTransport(startSceneConfig.InnerIPPort));
-            root.AddComponent<DBManagerComponent>();
 
+            root.AddComponent<DBManagerComponent>();
             root.AddComponent<VerificationCodeComponent>();
             root.AddComponent<EmailSenderComponent>();
             root.AddComponent<AccountSessionsComponent>();
+            root.AddComponent<TokensComponent>();
+            root.AddComponent<ServerInfosComponent>();
 
             await ETTask.CompletedTask;
         }

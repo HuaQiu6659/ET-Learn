@@ -13,7 +13,7 @@ namespace ET.Client
     [EntitySystemOf(typeof(VerificationCodeTimeOutComponent))]
     public static partial class VerificationCodeTimeOutComponentSystem
     {
-        [Invoke(TimerType.VerificationCodeTimeOut)]
+        [Invoke(TimerInvokeType.VerificationCodeTimeOut)]
         public class VerificationCodeTimeOut: ATimer<VerificationCodeTimeOutComponent>
         {
             protected override void Run(VerificationCodeTimeOutComponent self)
@@ -32,7 +32,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this ET.Server.VerificationCodeTimeOutComponent self)
         { 
-            self.timer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(TimeInfo.Instance.ServerNow() + 5 * 60 * 1000, TimerType.VerificationCodeTimeOut, self);
+            self.timer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(TimeInfo.Instance.ServerNow() + 5 * 60 * 1000, TimerInvokeType.VerificationCodeTimeOut, self);
         }
         
         [EntitySystem]

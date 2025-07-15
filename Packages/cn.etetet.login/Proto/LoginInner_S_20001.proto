@@ -38,3 +38,36 @@ message L2R_LoginResponse // IResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+// LoginCenter 向 Gate 请求断连特定对象
+// ResponseType G2L_DisconnectGateUnitResponse
+message L2G_DisconnectGateUnitRequest // IRequest
+{
+	int32 RpcId = 1;
+
+	string Account = 2;
+}
+
+message G2L_DisconnectGateUnitResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// 账号成功登录网关时向登录中心服进行登记
+// ResponseType L2G_AddLoginRecordResponse
+message G2L_AddLoginRecordRequest // IRequest
+{
+	int32 RpcId = 1;
+
+	int64 AccountHash = 2;
+	int64 GateId = 3;
+}
+
+message L2G_AddLoginRecordResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

@@ -1,16 +1,16 @@
-﻿/*
+/*
 ┌────────────────────────────┐
-│　Description: 账号长时间无操作
+│　Description: 记录其他服务器信息
 │　Remark: 
 └────────────────────────────┘
 */
+using System.Collections.Generic;
 
 namespace ET.Server
 {
-    [ComponentOf(typeof(Session))]
-    public class AccountCheckOutTimeComponent : Entity, IAwake<string>, IDestroy
+    [ComponentOf(typeof(Scene))]
+    public class ServerInfosComponent : Entity, IAwake, IDestroy
     {
-        public long timer;
-        public string account;
+        public List<EntityRef<ServerInfo>> servers;
     }
 }
