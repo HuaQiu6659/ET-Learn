@@ -71,3 +71,33 @@ message L2G_AddLoginRecordResponse // IResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+// ResponseType L2G_RemoveLoginRecordResponse
+message G2L_RemoveLoginRecordRequest // IRequest
+{
+	int32 RpcId = 1;
+
+	int64 AccountHash = 2;
+	int64 GateId = 3;
+}
+
+message L2G_RemoveLoginRecordResponse // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}
+
+// Gate 发送给 Map, 通知下线
+// ResponseType M2G_ExitGameResponse
+message G2M_ExitGameRequest // ILocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2G_ExitGameResponse // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

@@ -24,7 +24,7 @@ namespace ET.Server
 
             var l2gRequest = L2G_DisconnectGateUnitRequest.Create();
             {
-                l2gRequest.AccountHash = accountHash;
+                l2gRequest.Account = request.Account;
             }
             var g2lResponse = await scene.GetComponent<MessageSender>().Call(gateConfig.ActorId, l2gRequest) as G2L_DisconnectGateUnitResponse;
             response.Error = g2lResponse.Error;
