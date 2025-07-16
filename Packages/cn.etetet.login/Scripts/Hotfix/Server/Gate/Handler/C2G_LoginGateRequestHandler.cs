@@ -60,6 +60,7 @@
                 //角色在线, 直接替换连接
                 player.GetComponent<PlayerSessionComponent>().Session = session;
                 player.RemoveComponent<PlayerOfflineOutTimeComponent>();
+                session.GetComponent<SessionPlayerComponent>().Player = player;
             }
             else
             {

@@ -21,9 +21,10 @@ namespace ET.Server
             self.Root().GetComponent<TimerComponent>().Remove(ref self.timer);
         }
 
-        public static PlayerOfflineOutTimeComponent Kick(this PlayerOfflineOutTimeComponent self)
+        //下线后这个组件也会被释放掉
+        public static void Kick(this PlayerOfflineOutTimeComponent self)
         {
-            return self;
+            DisconnectHelper.KickAsync(self.GetParent<Player>()).NoContext();
         }
     }
 

@@ -101,3 +101,16 @@ message M2G_ExitGameResponse // ILocationResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+// ResponseType M2G_SessionLoginResponse
+message G2M_SessionLoginRequest // ILocationRequest
+{
+	int32 RpcId = 1;
+}
+
+message M2G_SessionLoginResponse // ILocationResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

@@ -12,7 +12,9 @@ namespace ET.Server
         protected override async ETTask Run(Scene scene, G2L_RemoveLoginRecordRequest request, L2G_RemoveLoginRecordResponse response)
         {
             var loginRecorder = scene.GetComponent<LoginInfoRecorderComponent>();
-            loginRecorder.Remove(request.AccountHash);
+            var gateId = loginRecorder.Get(request.AccountHash);
+            if (gateId == request.GateId)
+                loginRecorder.Remove(request.AccountHash);
             await ETTask.CompletedTask;
         }
     }

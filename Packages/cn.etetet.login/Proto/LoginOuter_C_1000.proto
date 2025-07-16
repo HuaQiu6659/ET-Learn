@@ -227,4 +227,6 @@ message G2C_EnterGameResponse // ISessionResponse
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
+
+	int64 MyUnitId = 4;
 }

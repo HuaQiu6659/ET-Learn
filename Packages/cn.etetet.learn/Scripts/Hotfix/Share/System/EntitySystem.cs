@@ -16,6 +16,8 @@ namespace ET
             self.RemoveComponent<K>();
             return self.AddComponent<K>(isFromPool);
         }
+
+        public static bool HasComponent<K>(this Entity self) where K : Entity => self.GetComponent<K>() is not null;
 #pragma warning restore ET0014 // 禁止在Entity类中直接调用Child和Component
     }
 }

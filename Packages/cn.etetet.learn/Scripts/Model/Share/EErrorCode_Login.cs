@@ -11,6 +11,10 @@ namespace ET
         成功 = 0,
 
         网关令牌错误 = ErrorCode.ERR_ConnectGateKeyError,
+        其他错误,
+
+        未连接网关,
+
         客户端连接发生变化,
 
         账号不合法,
@@ -29,6 +33,8 @@ namespace ET
 
         令牌验证失败,
 
-        账号在其他客户端登录
+        账号在其他客户端登录, 
+
+        进入游戏失败
     }
 }
