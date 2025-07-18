@@ -21,6 +21,7 @@ namespace ET.Server
             root.AddComponent<AccountSessionsComponent>();
             root.AddComponent<TokensComponent>();
             root.AddComponent<ServerInfosComponent>();
+            root.AddComponent<CacheComponent>();
 
             await ETTask.CompletedTask;
         }

@@ -25,8 +25,9 @@
             var coroutineLockerCmp = scene.GetComponent<CoroutineLockComponent>();
             using var coroutineLocker = await coroutineLockerCmp.Wait(CoroutineLockType.RealmKey, accountHash);
 
+            //此时Session是在Realm 上, Realm是在公共服务器 1000, 那么就不能直接使用 session.Zone() 进行区服配置获取
             //获取gate信息
-            var gateConfig = RealmGateAddressHelper.GetGate(session.Zone(), accountHash);
+            var gateConfig = RealmGateAddressHelper.GetGate((int)request.ServerId, accountHash);
             //向gate获取令牌, 用户拿着令牌登录gate
             R2G_GetLoginKey r2gGetLoginKey = R2G_GetLoginKey.Create();
             {

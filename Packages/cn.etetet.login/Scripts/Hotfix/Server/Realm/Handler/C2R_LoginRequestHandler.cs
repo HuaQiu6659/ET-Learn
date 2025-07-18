@@ -26,11 +26,6 @@ namespace ET.Server
                 ReleaseWithError(EErrorCode_Login.账号不合法);
                 return;
             }
-            if (!AccountHelper.IsValidPassword(request.Password))
-            {
-                ReleaseWithError(EErrorCode_Login.密码不合法);
-                return;
-            }
 
             var scene = session.Root();
 
@@ -39,13 +34,13 @@ namespace ET.Server
             using (await scene.GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.LoginAccount, request.Account.GetLongHashCode()))
             {
                 // 根据配置表 zone 获取对应的数据库
-                var dbMgr = scene.GetComponent<DBManagerComponent>().GetZoneDB(session.Zone());
-                var infos = await dbMgr.Query<AccountInfo>(info => info.account == request.Account);
+                var cacheCmp = scene.GetComponent<CacheComponent>();
+                var infos = await cacheCmp.Query<AccountInfo>(info => info.account == request.Account);
 
                 // 数据库中没有对应账号
                 if (infos.Count == 0)
                 {
-                    if (!request.ByVerificationCode)
+                    /*if (!request.ByVerificationCode)
                     {
                         ReleaseWithError(EErrorCode_Login.账号不存在);
                         return;
@@ -57,21 +52,31 @@ namespace ET.Server
                         return;
                     }
 
-                    // 验证码登录的情况下自动注册账号
+                    // 验证码登录的情况下自动注册账号*/
                     var now = TimeInfo.Instance.ServerNow();
                     account = session.AddChild<AccountInfo>();
                     {
                         account.account = request.Account;
-                        account.password = string.Empty;
+                        account.password = request.ByVerificationCode ? 0 : request.Password;
                         account.state = EAccountState.用户;
                         account.createTime = now;
                         account.lastLoginTime = now;
+                    }
+                    cacheCmp.AddOrUpdate(account).NoContext();
+                }
+                //已经创建账号且用验证码登录
+                else if (request.ByVerificationCode)
+                {
+                    if (!await scene.GetComponent<VerificationCodeComponent>().Verificate(request.Account, request.Password))
+                    {
+                        ReleaseWithError(EErrorCode_Login.验证码错误);
+                        return;
                     }
                 }
                 else
                 {
                     account = infos[0];
-                    if (string.IsNullOrEmpty(account.password))
+                    if (account.password == 0)
                     {
                         ReleaseWithError(EErrorCode_Login.未设置密码);
                         return;
@@ -92,8 +97,6 @@ namespace ET.Server
                     account.lastLoginTime = TimeInfo.Instance.ServerNow();
                     session.AddChild(account);
                 }
-
-                await dbMgr.Save(account);
             }
 
             // 向登录中心进行登录请求

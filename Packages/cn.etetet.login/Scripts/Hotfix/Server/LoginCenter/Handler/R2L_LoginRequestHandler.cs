@@ -6,7 +6,7 @@
 */
 namespace ET.Server
 {
-    [MessageSessionHandler(SceneType.LoginCenter)]
+    [MessageHandler(SceneType.LoginCenter)]
     public partial class R2L_LoginRequestHandler : MessageHandler<Scene, R2L_LoginRequest, L2R_LoginResponse>
     {
         protected override async ETTask Run(Scene scene, R2L_LoginRequest request, L2R_LoginResponse response)

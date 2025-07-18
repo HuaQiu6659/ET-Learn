@@ -15,6 +15,8 @@ namespace ET.Server
         /// <summary> 验证码 </summary>
         public string code;
 
+        public long CodeHash => code.GetLongHashCode();
+
         /// <summary> 避免短时间内重复发送 </summary>
         public long lastSendTime;
     }

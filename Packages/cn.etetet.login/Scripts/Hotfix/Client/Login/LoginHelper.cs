@@ -4,12 +4,16 @@ namespace ET.Client
 {
     public static class LoginHelper
     {
-        public static async ETTask LoginByPassword(Scene root, string address, string account, string password)
+        public static async ETTask LoginByPasswordAsync(Scene root, string address, string account, string password) => await LoginAsync(root, address, account, password, false);
+
+        public static async ETTask LoginByVerificationCodeAsync(Scene root, string address, string account, string code) => await LoginAsync(root, address, account, code, true);
+
+        private static async ETTask LoginAsync(Scene root, string address, string account, string password, bool byVerificationCode)
         {
             //保证登录与上一次的链接无关联
             ClientSenderComponent clientSenderComponent = root.ReplaceComponent<ClientSenderComponent>();
 
-            using var response = await clientSenderComponent.LoginAsync(address, account, password);
+            using var response = await clientSenderComponent.LoginAsync(address, account, password, byVerificationCode);
             if (response.Error != ErrorCode.ERR_Success)
             {
                 Log.Error(ZString.Format("登录失败, {0}:{1}", response.Error, response.Message));

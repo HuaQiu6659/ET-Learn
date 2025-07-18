@@ -22,7 +22,8 @@ namespace ET.Server
         [EntitySystem]
         private static void Destroy(this ET.Server.AccountCheckOutTimeComponent self)
         {
-
+            var timerCmp = self.Root().GetComponent<TimerComponent>();
+            timerCmp.Remove(ref self.timer);
         }
 
         [EntitySystem]

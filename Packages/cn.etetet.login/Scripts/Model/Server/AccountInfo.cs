@@ -12,7 +12,7 @@ namespace ET.Server
         public EAccountState state;
 
         public string account;
-        public string password;
+        public long password;
 
         public long createTime;
         public long lastLoginTime;

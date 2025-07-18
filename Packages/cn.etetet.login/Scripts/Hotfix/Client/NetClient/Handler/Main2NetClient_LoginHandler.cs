@@ -14,7 +14,7 @@ namespace ET.Client
         protected override async ETTask Run(Scene root, Main2NetClient_Login request, NetClient2Main_Login response)
         {
             string account = request.Account;
-            string password = request.Password;
+            long password = request.Password;
             // 创建一个ETModel层的Session
             root.RemoveComponent<RouterAddressComponent>();
             // 获取路由跟realmDispatcher地址

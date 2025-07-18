@@ -7,10 +7,11 @@ message Main2NetClient_Login // IRequest
 {
 	int32 RpcId = 1;
 	int32 OwnerFiberId = 2;
+
 	string Address = 3;
-	
 	string Account = 4;		// 账号
-	string Password = 5; 	// 密码
+	int64 Password = 5; 	// 密码
+	bool ByVerificationCode = 6;	//True: 验证码
 }
 
 message NetClient2Main_Login // IResponse
@@ -46,8 +47,8 @@ message C2R_LoginRequest // ISessionRequest
 	int32 RpcId = 1;
 
 	string Account = 2;
-	bool ByVerificationCode = 3;
-	string Password = 4; // 密码or验证码
+	int64 Password = 3; // 密码or验证码
+	bool ByVerificationCode = 4;
 }
 
 message R2C_LoginRespose // ISessionResponse
@@ -83,7 +84,7 @@ message C2R_RegisterAccountRequest // ISessionRequest
 	int32 RpcId = 1;
 
 	string Account = 2;
-	string Password = 3;
+	int64 Password = 3;
 	string VerificationCode = 4;
 }
 

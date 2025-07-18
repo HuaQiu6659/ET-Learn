@@ -6,7 +6,7 @@
 */
 namespace ET.Server
 {
-    [MessageSessionHandler(SceneType.LoginCenter)]
+    [MessageHandler(SceneType.LoginCenter)]
     public partial class G2L_RemoveLoginRecordRequestHandler : MessageHandler<Scene, G2L_RemoveLoginRecordRequest, L2G_RemoveLoginRecordResponse>
     {
         protected override async ETTask Run(Scene scene, G2L_RemoveLoginRecordRequest request, L2G_RemoveLoginRecordResponse response)

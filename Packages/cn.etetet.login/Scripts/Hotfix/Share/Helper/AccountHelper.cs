@@ -25,7 +25,22 @@ namespace ET
             if (IsValidPhoneNumber(account))
                 return true;
 
+            if (IsValidString(account))
+                return true;
+
             return false;
+        }
+
+
+        private static bool IsValidString(string account)
+        {
+            // 检查长度是否在6-20之间
+            if (account.Length < 6 || account.Length > 20)
+                return false;
+
+            // 检查是否只包含字母和数字
+            var passwordRegex = new Regex(@"^[a-zA-Z0-9]+$", RegexOptions.Compiled);
+            return passwordRegex.IsMatch(account);
         }
         
         /// <summary>

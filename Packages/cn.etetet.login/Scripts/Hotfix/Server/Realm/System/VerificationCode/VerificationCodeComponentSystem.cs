@@ -46,13 +46,13 @@ namespace ET.Server
 
         /// <param name="owner">邮箱/电话号码</param>
         /// <param name="code">验证码</param>
-        public static async ETTask<bool> Verificate(this VerificationCodeComponent self, string owner, string code)
+        public static async ETTask<bool> Verificate(this VerificationCodeComponent self, string owner, long code)
         {
             using (await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.VerificationCode, owner.GetLongHashCode()))
             {
                 if (self.codeMap.TryGetValue(owner, out var codeInMap))
                 {
-                    var result = codeInMap.Entity.code == code;
+                    var result = codeInMap.Entity.CodeHash == code;
 
                     //验证成功则直接销毁验证码
                     if (result)

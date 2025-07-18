@@ -7,7 +7,7 @@
         {
             string account = request.Account;
             var netComponent = scene.GetComponent<NetComponent>();
-            var gateSession = await netComponent.CreateRouterSession(NetworkHelper.ToIPEndPoint(request.GateAddress), account, account);
+            var gateSession = await netComponent.CreateRouterSession(NetworkHelper.ToIPEndPoint(request.GateAddress), account, account.GetLongHashCode());
             scene.GetComponent<SessionComponent>().Session = gateSession;
             gateSession.AddComponent<ClientSessionErrorComponent>();
 
