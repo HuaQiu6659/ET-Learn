@@ -12,7 +12,8 @@ namespace ET
         private static SerializedProperty address;
 
         private static SerializedObject yooConfig;
-        private static SerializedProperty playMode;
+        private static SerializedProperty editorMode;
+        private static SerializedProperty runtimeMode;
         private static SerializedProperty cdnUri;
 
         [SettingsProvider]
@@ -43,7 +44,8 @@ namespace ET
             EditorGUILayout.PropertyField(address, new GUIContent("Server Address"));
 
             Titile("YooAsset", 10);
-            EditorGUILayout.PropertyField(playMode, new GUIContent("Play Mode"));
+            EditorGUILayout.PropertyField(editorMode, new GUIContent("编辑器模式"));
+            EditorGUILayout.PropertyField(runtimeMode, new GUIContent("实机运行"));
             EditorGUILayout.PropertyField(cdnUri, new GUIContent("CDN"));
 
             if (globalConfig.ApplyModifiedProperties() || yooConfig.ApplyModifiedProperties())
@@ -64,8 +66,9 @@ namespace ET
             address = globalConfig.FindProperty("Address");
 
             yooConfig = new SerializedObject(Resources.Load("YooConfig"));
-            playMode = yooConfig.FindProperty("EPlayMode");
-            cdnUri = yooConfig.FindProperty("Url");
+            runtimeMode = yooConfig.FindProperty(nameof(runtimeMode));
+            editorMode = yooConfig.FindProperty(nameof(editorMode));
+            cdnUri = yooConfig.FindProperty("url");
         }
     }
 
