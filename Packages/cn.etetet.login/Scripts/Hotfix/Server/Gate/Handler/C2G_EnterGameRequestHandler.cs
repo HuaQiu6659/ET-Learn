@@ -10,7 +10,7 @@ namespace ET.Server
             var locker = session.Lock(out var hadLocked);
             if (hadLocked)
             {
-                RelesaseWithError(EErrorCode_Login.请求过于频繁);
+                RelesaseWithError(EErrorCode.请求过于频繁);
                 return;
             }
             using var toRelease = locker;
@@ -18,14 +18,14 @@ namespace ET.Server
             var sessionPlayerCmp = session.GetComponent<SessionPlayerComponent>();
             if (sessionPlayerCmp is null)
             {
-                RelesaseWithError(EErrorCode_Login.未连接网关);
+                RelesaseWithError(EErrorCode.未连接网关);
                 return;
             }
 
             var player = sessionPlayerCmp.Player;
             if (player is null || player.IsDisposed)
             {
-                RelesaseWithError(EErrorCode_Login.其他错误);
+                RelesaseWithError(EErrorCode.其他错误);
                 return;
             }
 
@@ -35,7 +35,7 @@ namespace ET.Server
 
             if (instanceId != session.InstanceId || player.IsDisposed)
             {
-                RelesaseWithError(EErrorCode_Login.客户端连接发生变化);
+                RelesaseWithError(EErrorCode.客户端连接发生变化);
                 return;
             }
 
@@ -60,7 +60,7 @@ namespace ET.Server
                 catch (System.Exception ex)
                 {
                     var message = ZString.Format("二次登录失败\n{0}", ex);
-                    response.Error = (int)EErrorCode_Login.请求过于频繁;
+                    response.Error = (int)EErrorCode.请求过于频繁;
                     response.Message = message;
                     await DisconnectHelper.KickWithoutLock(player);
                     session?.DisconnectAsync().NoContext();
@@ -89,12 +89,12 @@ namespace ET.Server
             {
                 response.Message = ZString.Format("角色进入游戏逻辑出现问题, 账号: {0}   角色Id: {1}   异常信息: {2}", player.Account, player.Id, ex);
                 Log.Error(response.Message);
-                response.Error = (int)EErrorCode_Login.进入游戏失败;
+                response.Error = (int)EErrorCode.进入游戏失败;
                 await DisconnectHelper.KickWithoutLock(player);
                 session.DisconnectAsync().NoContext();
             }
 
-            void RelesaseWithError(EErrorCode_Login err)
+            void RelesaseWithError(EErrorCode err)
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();

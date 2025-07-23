@@ -1,12 +1,12 @@
 /*
 ┌────────────────────────────┐
-│　Description: 
+│　Description: 错误码
 │　Remark: 
 └────────────────────────────┘
 */
 namespace ET
 {
-    public enum EErrorCode_Login
+    public enum EErrorCode
     {
         成功 = 0,
 

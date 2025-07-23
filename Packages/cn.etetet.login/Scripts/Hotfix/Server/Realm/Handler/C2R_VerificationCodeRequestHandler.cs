@@ -17,7 +17,7 @@ namespace ET.Server
                 var now = TimeInfo.Instance.ServerNow();
                 if (now - code.lastSendTime <= 1 * 1000)    //短时间内重复请求
                 {
-                    RelesaseWithError(EErrorCode_Login.请求过于频繁);
+                    RelesaseWithError(EErrorCode.请求过于频繁);
                     return;
                 }
 
@@ -27,7 +27,7 @@ namespace ET.Server
                     bool emailSent = await session.Root().GetComponent<EmailSenderComponent>().SendVerificationCodeAsync(request.Receiver, code.code);
                     if (!emailSent)
                     {
-                        RelesaseWithError(EErrorCode_Login.验证码发送失败);
+                        RelesaseWithError(EErrorCode.验证码发送失败);
                         return;
                     }
                     Log.Info($"Verification code sent to email: {request.Receiver}");
@@ -40,7 +40,7 @@ namespace ET.Server
                 code.lastSendTime = now;
             }
 
-            void RelesaseWithError(EErrorCode_Login err)
+            void RelesaseWithError(EErrorCode err)
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();

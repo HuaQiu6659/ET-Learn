@@ -11,7 +11,7 @@
             var locker = session.Lock(out var hadLocked);
             if (hadLocked)
             {
-                RelesaseWithError(EErrorCode_Login.请求过于频繁);
+                RelesaseWithError(EErrorCode.请求过于频繁);
                 return;
             }
             using var toRelease = locker;
@@ -21,7 +21,7 @@
             long accountHash = account.GetLongHashCode();
             if (account == null)
             {
-                RelesaseWithError(EErrorCode_Login.网关令牌错误);
+                RelesaseWithError(EErrorCode.网关令牌错误);
                 return;
             }
             //验证完成就销毁令牌
@@ -33,7 +33,7 @@
             using var coroutineLocker = await coroutineLockComponent.Wait(CoroutineLockType.LoginGate, accountHash);
             if (instanceId != session.InstanceId)
             {
-                RelesaseWithError(EErrorCode_Login.客户端连接发生变化);
+                RelesaseWithError(EErrorCode.客户端连接发生变化);
                 return;
             }
 
@@ -80,7 +80,7 @@
 
             response.PlayerId = player.Id;
 
-            void RelesaseWithError(EErrorCode_Login err)
+            void RelesaseWithError(EErrorCode err)
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();

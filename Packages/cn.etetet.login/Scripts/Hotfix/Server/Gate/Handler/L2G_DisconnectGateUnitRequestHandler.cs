@@ -16,7 +16,7 @@
             PlayerSessionComponent sessionCmp = player.GetComponent<PlayerSessionComponent>();
             A2C_Disconnect disconnect = A2C_Disconnect.Create();
             {
-                disconnect.Error = (int)EErrorCode_Login.账号在其他客户端登录;
+                disconnect.Error = (int)EErrorCode.账号在其他客户端登录;
             }
             sessionCmp.Session.Send(disconnect);
             sessionCmp.Session.DisconnectAsync().NoContext();

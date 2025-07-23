@@ -13,7 +13,7 @@ namespace ET.Server
             var locker = session.Lock(out var hasLocked);
             if (hasLocked)
             {
-                RelesaseWithError(EErrorCode_Login.请求过于频繁);
+                RelesaseWithError(EErrorCode.请求过于频繁);
                 return;
             }
             using var toRelease = locker;
@@ -22,7 +22,7 @@ namespace ET.Server
             var tokenPassed = scene.GetComponent<TokensComponent>().Verificate(request.Account, request.Token);
             if (!tokenPassed)
             {
-                RelesaseWithError(EErrorCode_Login.网关令牌错误);
+                RelesaseWithError(EErrorCode.网关令牌错误);
                 return;
             }
 
@@ -50,7 +50,7 @@ namespace ET.Server
 
             response.Info = userInfo.ToProto();
 
-            void RelesaseWithError(EErrorCode_Login err)
+            void RelesaseWithError(EErrorCode err)
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();

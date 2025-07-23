@@ -14,7 +14,7 @@ namespace ET.Server
 
             if (session.GetComponent<SessionLockingComponent>() != null)
             {
-                ReleaseWithError(EErrorCode_Login.请求过于频繁);
+                ReleaseWithError(EErrorCode.请求过于频繁);
                 return;
             }
             // 登录结束就释放锁
@@ -23,7 +23,7 @@ namespace ET.Server
             // 判断账号密码是否合法(长度, 非法字符)
             if (!AccountHelper.IsValidAccount(request.Account))
             {
-                ReleaseWithError(EErrorCode_Login.账号不合法);
+                ReleaseWithError(EErrorCode.账号不合法);
                 return;
             }
 
@@ -69,7 +69,7 @@ namespace ET.Server
                 {
                     if (!await scene.GetComponent<VerificationCodeComponent>().Verificate(request.Account, request.Password))
                     {
-                        ReleaseWithError(EErrorCode_Login.验证码错误);
+                        ReleaseWithError(EErrorCode.验证码错误);
                         return;
                     }
                 }
@@ -78,19 +78,19 @@ namespace ET.Server
                     account = infos[0];
                     if (account.password == 0)
                     {
-                        ReleaseWithError(EErrorCode_Login.未设置密码);
+                        ReleaseWithError(EErrorCode.未设置密码);
                         return;
                     }
 
                     if (account.password != request.Password)
                     {
-                        ReleaseWithError(EErrorCode_Login.密码错误);
+                        ReleaseWithError(EErrorCode.密码错误);
                         return;
                     }
 
                     if (account.state == EAccountState.封禁)
                     {
-                        ReleaseWithError(EErrorCode_Login.账号已被封禁);
+                        ReleaseWithError(EErrorCode.账号已被封禁);
                         return;
                     }
 
@@ -136,7 +136,7 @@ namespace ET.Server
             tokensCmp.AddOrUpdate(request.Account, token);
             response.Token = token;
 
-            void ReleaseWithError(EErrorCode_Login err)
+            void ReleaseWithError(EErrorCode err)
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();

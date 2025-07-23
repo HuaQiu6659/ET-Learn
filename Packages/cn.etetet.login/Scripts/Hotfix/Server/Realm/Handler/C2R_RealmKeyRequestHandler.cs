@@ -8,7 +8,7 @@
             session.Lock(out var hadLocked);
             if (hadLocked)
             {
-                RelesaseWithError(EErrorCode_Login.请求过于频繁);
+                RelesaseWithError(EErrorCode.请求过于频繁);
                 return;
             }
             var scene = session.Root();
@@ -16,7 +16,7 @@
             var verificated = scene.GetComponent<TokensComponent>().Verificate(request.Account, request.Token);
             if (!verificated)
             {
-                RelesaseWithError(EErrorCode_Login.令牌验证失败);
+                RelesaseWithError(EErrorCode.令牌验证失败);
                 return;
             }
 
@@ -41,7 +41,7 @@
 
             session?.DisconnectAsync().NoContext();
 
-            void RelesaseWithError(EErrorCode_Login err)
+            void RelesaseWithError(EErrorCode err)
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();

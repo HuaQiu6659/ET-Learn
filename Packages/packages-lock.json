@@ -228,7 +228,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "f789083c31250c83082da9b29be0c976152d699b"
+      "hash": "a7c6b49a0141a5bff9b1983e38137522ef61977d"
     },
     "com.halodi.halodi-unity-package-registry-manager": {
       "version": "file:com.halodi.halodi-unity-package-registry-manager",

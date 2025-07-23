@@ -12,14 +12,14 @@ namespace ET.Server
             var tokenPassed = scene.GetComponent<TokensComponent>().Verificate(request.Account, request.Token);
             if (!tokenPassed)
             {
-                RelesaseWithError(EErrorCode_Login.令牌验证失败);
+                RelesaseWithError(EErrorCode.令牌验证失败);
                 return;
             }
 
             response.List.AddRange(scene.GetComponent<ServerInfosComponent>().servers.Select(c => c.Entity.ToProto()));
             await ETTask.CompletedTask;
 
-            void RelesaseWithError(EErrorCode_Login err)
+            void RelesaseWithError(EErrorCode err)
             {
                 response.Error = (int)err;
                 response.Message = err.ToString();
