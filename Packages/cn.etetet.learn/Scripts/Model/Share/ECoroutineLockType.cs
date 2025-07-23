@@ -8,14 +8,16 @@ namespace ET
 {
     public enum ECoroutineLockType
     {
-        账号验证 = PackageType.Login * 1000 + 1,
-        验证码,
-        账号信息,
+        Login_账号验证 = PackageType.Login * 1000 + 1,
+        Login_验证码,
+        Login_账号信息,
+        Login_登录中心服操作,
+        Login_Realm令牌操作,
+        Login_网关操作,
 
-        登录中心服操作,
-        Realm令牌操作,
-        网关操作,
+        DB = PackageType.DB * 1000 + 1,
 
-        数据缓存操作,
+        YooAssets = PackageType.YooAssets * 1000 + 1,
+        YooAssets_资源加载,
     }
 }

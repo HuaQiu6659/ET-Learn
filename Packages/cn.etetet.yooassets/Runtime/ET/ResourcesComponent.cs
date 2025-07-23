@@ -81,9 +81,8 @@ namespace ET
                     string fallbackHostServer = GetHostServerURL(yooConfig.url, package.PackageName);
                     IRemoteServices remoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
                     FileSystemParameters cacheFileSystemParams = FileSystemParameters.CreateDefaultCacheFileSystemParameters(remoteServices);
-                    FileSystemParameters buildinFileSystemParams = FileSystemParameters.CreateDefaultBuildinFileSystemParameters();
                     HostPlayModeParameters initParameters = new();
-                    initParameters.BuildinFileSystemParameters = buildinFileSystemParams; 
+                    initParameters.BuildinFileSystemParameters = null; 
                     initParameters.CacheFileSystemParameters = cacheFileSystemParams;
                     await package.InitializeAsync(initParameters).Task;
                     break;

@@ -4,9 +4,7 @@
 │　Remark: 
 └────────────────────────────┘
 */
-using ET.Server;
-
-namespace ET
+namespace ET.Server
 {
     public static partial class SessionSystem
     {

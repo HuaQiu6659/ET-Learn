@@ -58,7 +58,7 @@ namespace ET.Server
 
         public static async ETTask<List<T>> Query<T>(this CacheComponent self, Expression<Func<T, bool>> filter) where T : Entity
         {
-            using var locker = await self.CoroutineLock(ECoroutineLockType.数据缓存操作, GetLockerKey<T>());
+            using var locker = await self.CoroutineLock(ECoroutineLockType.DB, GetLockerKey<T>());
 
             var func = filter.Compile();
             var caches = self.GetCaches<T>();
@@ -85,7 +85,7 @@ namespace ET.Server
 
         public static async ETTask<CacheComponent> AddOrUpdate<T>(this CacheComponent self, T entity) where T : Entity
         {
-            using var locker = await self.CoroutineLock(ECoroutineLockType.数据缓存操作, GetLockerKey<T>());
+            using var locker = await self.CoroutineLock(ECoroutineLockType.DB, GetLockerKey<T>());
 
             var caches = self.GetCaches<T>();
             if (!caches.TryGetValue(entity.Id, out var cache))
@@ -109,7 +109,7 @@ namespace ET.Server
             var dbMgr = self.Root().GetComponent<DBManagerComponent>();
             foreach (var item in self.cacheMap.AsValueEnumerable())
             {
-                using var locker = await self.CoroutineLock(ECoroutineLockType.数据缓存操作, GetLockerKey(item.Key));
+                using var locker = await self.CoroutineLock(ECoroutineLockType.DB, GetLockerKey(item.Key));
                 foreach (var cache in item.Value.AsValueEnumerable())
                 {
                     if (!cache.Value.Entity.cacheChanged)
